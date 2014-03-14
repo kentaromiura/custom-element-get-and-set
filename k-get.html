@@ -1,0 +1,66 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<polymer-element name="k-get" attributes="property source">
+  <script>
+  (function(){
+    function from(source){
+      return source.kattributes || {}
+    }
+    function set(){
+      var property = this.getAttribute('property'),
+          source = this.getAttribute('source') || 'Polymer'
+
+          if (property !== null) {
+              switch (source) {
+                  case 'scoped':
+                    var current = this
+                    while(current.parentNode){
+                      source = from(current.parentNode)
+                      if(source && property in source){
+                        this.innerHTML = source[property];
+                        return
+                      }else{
+                        current = current.parentNode
+                      }
+                    }
+                    source = from(Polymer)
+                    if(source && property in source){
+                      this.innerHTML = source[property];
+                      return
+                    }
+                    source = from(new Function('return this')())
+                    if(source && property in source){
+                      this.innerHTML = source[property];
+                    }
+                  break;
+                  case 'parent':
+                      source = from(this.parentNode)
+                      break;
+                  case 'global':
+                      source = from(new Function('return this')())
+                      break;
+                  case 'Polymer':
+                      source = from(Polymer)
+                      break;
+                  default:
+                      source = null;
+                      break;
+                    }
+          }
+
+          if(source && property in source){
+            this.innerHTML = source[property];
+          }
+    }
+
+    Polymer('k-get', {
+      attributeChanged: function() {
+          set.call(this)
+      },
+      ready: function() {
+          set.call(this)
+      }
+    })
+  })()
+  </script>
+</polymer-element>

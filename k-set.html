@@ -1,0 +1,47 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<polymer-element name="k-set" attributes="property value target">
+  <script>
+(function() {
+  function scope(target) {
+    return target.kattributes || (target.kattributes = {})
+  }
+
+  function set() {
+      var property = this.getAttribute('property') || null,
+          value = this.getAttribute('value') || '',
+          target = this.getAttribute('target') || 'Polymer'
+          // target : parent | global | Polymer (defaults to Polymer)
+
+      if (property !== null) {
+          switch (target) {
+              case 'parent':
+                  target = scope(this.parentNode)
+                  break;
+              case 'global':
+                  target = scope(new Function('return this')())
+                  break;
+              case 'Polymer':
+                  target = scope(Polymer)
+                  break;
+              default:
+                  target = null;
+                  break;
+          }
+          if (target) {
+              target[property] = value
+          }
+      }
+  }
+
+  Polymer('k-set', {
+      attributeChanged: function(attrName, oldVal, newVal) {
+          set.call(this)
+      },
+      ready: function() {
+          set.call(this)
+      }
+  })
+})()
+  </script>
+</polymer-element>

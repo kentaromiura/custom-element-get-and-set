@@ -1,0 +1,19 @@
+{
+  "name": "custom-element-get-and-set",
+  "version": "0.1.0",
+  "authors": [
+    "Cristian Carlesso <@kentaromiura> (https://github.com/kentaromiura/)"
+  ],
+  "description": "web component for setting and printing properties",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "~0.2.1"
+  }
+}
