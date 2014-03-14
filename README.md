@@ -9,7 +9,7 @@ property: the name of the property to be setted
 
 value: the value of the property
 
-target: parent|global|Polymer where to store the property. default to Polymer if omitted
+target: _parent_ | _global_ | _Polymer_ where to store the property. default to Polymer if omitted
 
 	parent: will store the property on the parent element
 
@@ -21,7 +21,7 @@ target: parent|global|Polymer where to store the property. default to Polymer if
 
 property: the name of the property to print
 
-source: scoped|parent|global|Polymer the source where to read the property. default to Polymer if omitted
+source: _scoped_ | _parent_ | _global_ | _Polymer_ the source where to read the property. default to Polymer if omitted
 
 	scoped: try to look if the property is on the parent, if not look on the parent's parent and so on, if not found try looking in Polymer first and global as last.
 
