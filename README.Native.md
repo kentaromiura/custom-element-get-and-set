@@ -30,3 +30,5 @@ source: _scoped_ | _parent_ | _global_ | _private_ the source where to read the 
   global: look on the global object (window)
 
   private: look on the private object
+
+[DEMO](http://kentaromiura.github.io/custom-element-get-and-set/index.native.html)

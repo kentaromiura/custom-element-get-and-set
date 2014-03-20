@@ -1,6 +1,9 @@
 custom-element-get-and-set
 ==========================
 
+Note: this is the README for the Polymer version,
+[click for the native README version](README.Native.md)
+
 custom web component for setting and printing properties
 
 *&lt;k-set>* accepts 3 attributes: _property_, _value_, _target_
@@ -32,3 +35,4 @@ source: _scoped_ | _parent_ | _global_ | _Polymer_ the source where to read the 
 	Polymer: look on the Polymer object
 
 
+[DEMO](http://kentaromiura.github.io/custom-element-get-and-set/index.html)
