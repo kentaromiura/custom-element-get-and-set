@@ -4,8 +4,7 @@
     <!-- 1. Load platform support before any code that touches the DOM. -->
     <script src="bower_components/platform/platform.js"></script>
     <!-- 2. Load the component using an HTML Import -->
-    <link rel="import" href="k-set.html">
-    <link rel="import" href="k-get.html">
+    <link rel="import" href="k-native-get-set.html">
   </head>
   <body>
     <!-- 3. Declare the element by its tag. -->
@@ -21,8 +20,7 @@
     </div>
     <div>scoped:<k-get property=author source=scoped></k-get></div>
 
-    Polymer:<k-get property="author"></k-get><br/>
+    private:<k-get property="author"></k-get><br/>
     global:<k-get property="author" source="global"></k-get><br/>
-    <a href="index.native.html">Try the native version here</a>
   </body>
 </html>
