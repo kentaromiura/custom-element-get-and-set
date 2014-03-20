@@ -1,0 +1,111 @@
+<script>
+(function(KGetProto, KSetProto) {
+  var Private = {},
+      observeHandler = function(create){
+        var observer = new MutationObserver(function(mutations){
+          mutations.forEach(function(mutation){
+            observer.disconnect()
+            create.call(mutation.target)
+          })
+        })
+        return observer
+      },
+  setObserver = observeHandler(kset),
+  getObserver = observeHandler(kget),
+  config = { attributes: true, childList: true, characterData: true }
+
+  function scope(target) {
+    return target.kattributes || (target.kattributes = {})
+  }
+
+  function kset() {
+      var property = this.getAttribute('property') || null,
+          value = this.getAttribute('value') || '',
+          target = this.getAttribute('target') || 'private'
+          // target : parent | global | private (defaults to private)
+
+      if (property !== null) {
+          switch (target) {
+              case 'parent':
+                  target = scope(this.parentNode)
+                  break;
+              case 'global':
+                  target = scope(new Function('return this')())
+                  break;
+              case 'private':
+                  target = scope(Private)
+                  break;
+              default:
+                  target = null;
+                  break;
+          }
+          if (target) {
+              target[property] = value
+          }
+      }
+      setObserver.observe(this, config);
+  }
+
+  function kget(){
+    var property = this.getAttribute('property'),
+        source = this.getAttribute('source') || 'private'
+
+        if (property !== null) {
+            switch (source) {
+                case 'scoped':
+                  var current = this
+                  while(current.parentNode){
+                    source = scope(current.parentNode)
+                    if(source && property in source){
+                      this.innerHTML = source[property];
+                      return
+                    }else{
+                      current = current.parentNode
+                    }
+                  }
+                  source = scope(Private)
+                  if(source && property in source){
+                    this.innerHTML = source[property];
+                    return
+                  }
+                  source = scope(new Function('return this')())
+                  if(source && property in source){
+                    this.innerHTML = source[property];
+                  }
+                break;
+                case 'parent':
+                    source = scope(this.parentNode)
+                    break;
+                case 'global':
+                    source = scope(new Function('return this')())
+                    break;
+                case 'private':
+                    source = scope(Private)
+                    break;
+                default:
+                    source = null;
+                    break;
+                  }
+        }
+
+        if(source && property in source){
+          this.innerHTML = source[property];
+        }
+        getObserver.observe(this, config);
+  }
+
+  KSetProto.createdCallback = function () {
+          kset.call(this)
+  }
+  KGetProto.createdCallback = function () {
+          kget.call(this)
+  }
+  document.registerElement('k-set', {
+      prototype: KSetProto
+  })
+  document.registerElement('k-get', {
+      prototype: KGetProto
+  })
+
+})(Object.create(HTMLElement.prototype), Object.create(HTMLElement.prototype))
+</script>
