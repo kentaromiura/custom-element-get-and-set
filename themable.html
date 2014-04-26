@@ -1,0 +1,44 @@
+<link rel="import" href="./bower_components/polymer/polymer.html">
+<link rel="import" href="k-get.html">
+
+<polymer-element name="k-themable">
+  <template>
+
+
+		<k-get style="display:none" id="theme" property="theme"></k-get>
+		<h1 id="h1">Hello!</h1>
+<div class="row">
+          <div class="col-lg-6">
+            <div class="bs-component">
+              <blockquote>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
+              </blockquote>
+            <div id="source-button" class="btn btn-primary btn-xs" style="display: none;">&lt; &gt;</div></div>
+          </div>
+          <div class="col-lg-6">
+            <div class="bs-component">
+              <blockquote class="pull-right">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
+              </blockquote>
+            </div>
+          </div>
+        </div>
+	</template>
+	<script>
+  (function(){
+    Polymer('k-themable', {
+			theme:'',
+      ready: function() {
+          var theme = this.$.theme.innerHTML
+					var style = document.createElement('div');
+					// using @import rule so it's scoped in canary.
+					style.innerHTML = "<style>@import url('"+theme+"')</style>"
+					this.$.h1.parentNode.appendChild(style.firstChild)
+					console.log(theme)
+      }
+    })
+  })()
+  </script>
+</polymer-element>
